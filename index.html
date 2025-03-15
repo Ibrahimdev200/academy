@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Distinct Children Academy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            line-height: 1.6;
+            color: #333;
+        }
+        header {
+            height: 9rem;
+        }
+        /* Navigation Styles */
+        .main-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0px 3%;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        .logo {
+            width: 150px;
+            height: 150px;
+        }
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            position: relative; /* For dropdown positioning */
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: #2c3e50;
+            font-weight: 600;
+            padding: 0.5rem 0;
+            position: relative; /* For the line animation */
+            overflow: hidden;
+        }
+        .nav-links a {
+    text-decoration: none;
+    color: #34495e;
+    font-weight: 500;
+    position: relative;
+    padding: 0.5rem 0;
+    transition: all 0.3s ease;
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #ff6b6b;
+    transition: width 0.3s ease;
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+.nav-links a:hover {
+    color: #2c3e50;
+}
+
+/* Mobile Menu */
+.menu-toggle {
+    display: none;
+    cursor: pointer;
+    z-index: 1001;
+}
+        /* Dropdown Styles */
+        .dropdown {
+            display: none; /* Hide by default */
+            position: absolute;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            margin-top: 0.5rem;
+            border-radius: 5px;
+        }
+        .dropdown a {
+            display: block;
+            padding: 0.5rem 1rem;
+            color: #2c3e50;
+            text-decoration: none;
+            font-size: 15px;
+        }
+        .dropdown a:hover {
+            background-color: #f0f0f0; /* Highlight on hover */
+        }
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(4, 9, 30, 0.7), rgba(4, 9, 30, 0.7)), url('student.jpg') no-repeat center center/cover;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+        }
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        .cta-buttons {
+            margin-top: 1rem;
+        }
+        .cta-buttons button {
+            padding: 10px 20px;
+            background-color: #ff6b6b;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.3s ease; /* Added transform */
+        }
+        .cta-buttons button:hover {
+            background-color: #e74c3c;
+            animation: beep 0.5s infinite; /* Beeping animation */
+        }
+        @keyframes beep {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        /* Programs Grid */
+        .programs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            padding: 4rem 2rem;
+            background-color: #f8f9fa;
+        }
+        .program-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .program-card i {
+            font-size: 3rem;
+            color: #ff6b6b;
+            margin-bottom: 1rem;
+        }
+        /* Vision Section */
+        .vision {
+            background: #2c3e50;
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+        .vision h2 {
+            margin-bottom: 1rem;
+        }
+        /* Achievement Banner */
+        .achievement-banner {
+            background: #ff6b6b;
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            margin: 2rem 0;
+            clip-path: polygon(0 10%, 100% 0, 100% 90%, 0 100%);
+        }
+        /* Gallery Section */
+        .gallery {
+            padding: 4rem 2rem;
+            background-color: #f8f9fa;
+        }
+        .gallery h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        .gallery-item {
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .gallery-item img {
+            width: 100%;
+            height: auto;
+            transition: transform 0.3s ease;
+        }
+        .gallery-item img:hover {
+            transform: scale(1.05);
+        }
+        /* Footer Styles */
+        footer {
+            background: #34495e;
+            color: white;
+            padding: 4rem 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        footer .contact-info {
+            padding: 1rem;
+        }
+        footer .contact-info h3 {
+            margin-bottom: 1rem;
+        }
+        footer .contact-info p {
+            margin: 0.5rem 0;
+        }
+        /* Login Section */
+        .login-section {
+            background: #f8f9fa;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+        .login-section h2 {
+            margin-bottom: 1rem;
+        }
+        .login-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+        .login-buttons button {
+            padding: 10px 20px;
+            background-color: #ff6b6b;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        .login-buttons button:hover {
+            background-color: #e74c3c;
+        }
+        /* Mobile Responsive */
+        @media screen and (max-width: 768px) {
+            .logo {
+                width: 120px;
+            }
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            .cta-buttons button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="main-nav">
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="admission.html">Admissions</a></li>
+                <li><a href="#programs">Programs</a></li>
+                <li><a href="#gallery">Gallery</a></li>
+                <li>
+                    <a href="#login" class="login-link">Login</a>
+                    <div class="dropdown">
+                        <a href="login.html">Student Login</a>
+                        <a href="login.html">Staff Login</a>
+                    </div>
+                </li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="logo">
+                <img src="academy_logo-removebg-preview.png" alt="Distinct Children Academy Logo" class="logo">
+            </div>
+        </nav>
+    </header>
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Distinct Children Academy</h1>
+            <p>Raising New Unicorn Leaders</p>
+            <div class="cta-buttons">
+                <button class="admission-cta">Apply Now</button>
+            </div>
+        </div>
+    </section>
+    <section class="achievement-banner">
+        <h2>🏆 Runner Up Champion - OBFERSIBOM Spelling Bee 3rd Edition</h2>
+    </section>
+    <section class="programs-grid" id="programs">
+        <div class="program-card">
+            <i class="fas fa-baby"></i>
+            <h3>Crèche</h3>
+            <p>Age 6 months - 2 years</p>
+        </div>
+        <div class="program-card">
+            <i class="fas fa-child"></i>
+            <h3>Nursery</h3>
+            <p>Early childhood development program</p>
+        </div>
+        <div class="program-card">
+            <i class="fas fa-school"></i>
+            <h3>Primary</h3>
+            <p>Foundation building curriculum</p>
+        </div>
+        <div class="program-card">
+            <i class="fas fa-user-graduate"></i>
+            <h3>JSS</h3>
+            <p>Junior Secondary School program</p>
+        </div>
+    </section>
+    <section class="gallery" id="gallery">
+        <h2>Picture Gallery</h2>
+        <div class="gallery-grid">
+            <div class="gallery-item"><img src="boy.avif" alt="Gallery Image 1"></div>
+            <div class="gallery-item"><img src="new.jpeg" alt="Gallery Image 2"></div>
+            <div class="gallery-item"><img src="student.jpg" alt="Gallery Image 3"></div>
+            <div class="gallery-item"><img src="f3a95d_cb8c43506c6f4787b5d13e72c1384789~mv2.avif" alt="Gallery Image 4"></div>
+            <div class="gallery-item"><img src="images.jpeg" alt="Gallery Image 5"></div>
+            <div class="gallery-item"><img src="learning.jpg" alt="Gallery Image 6"></div>
+        </div>
+    </section>
+    <section class="vision">
+        <h2>Our Vision</h2>
+        <p>"Raising A New Unicorn Leaders"</p>
+        <p>We strive to nurture creativity, critical thinking, and emotional intelligence in our students.</p>
+        <p>Our goal is to provide a safe and inclusive environment where children can thrive and develop into confident individuals.</p>
+        <p>We believe in the power of education to transform lives and communities, fostering a love for learning that lasts a lifetime.</p>
+    </section>
+    <section class="login-section">
+        <h2>Login</h2>
+        <div class="login-buttons">
+            <button>Student Login</button>
+            <button>Staff Login</button>
+        </div>
+    </section>
+    <footer id="contact">
+        <div class="contact-info">
+            <h3>Contact Us</h3>
+            <p><i class="fas fa-map-marker-alt"></i> Nung Mbom Street (Behind Anua Obio Village Square)</p>
+            <p><i class="fas fa-map-marker-alt"></i> Uyo, Akwa Ibom State</p>
+            <p><i class="fas fa-envelope"></i> Email: info@distinctchildren.ac</p>
+            <p><i class="fas fa-phone"></i> Phone: +234 812 345 6789</p>
+        </div>
+        <div class="map-embed">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3975.418646505778!2d7.802886314765924!3d5.045932696323718!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1030f6f2c6e5f0e1%3A0x8c1f1c77d164d3d4!2sNung%20Mbom%20Street%20(Behind%20Anua%20Obio%20Village%20Square)!5e0!3m2!1sen!2sng!4v1630949531803!5m2!1sen!2sng" width="300" height="200" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+    </footer>
+    <script>
+        // Smooth Scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        // Dropdown functionality for Login
+        const loginLink = document.querySelector('.login-link');
+        const dropdown = document.querySelector('.dropdown');
+        loginLink.addEventListener('click', (e) => {
+            e.preventDefault(); // Prevent default anchor behavior
+            dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block'; // Toggle dropdown
+        });
+        // Close dropdown if clicked outside
+        window.addEventListener('click', (e) => {
+            if (!loginLink.contains(e.target) && !dropdown.contains(e.target)) {
+                dropdown.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
